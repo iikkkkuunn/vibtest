@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <title>storeAcc</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.flot.min.js"></script>
+  </head>
+  <body>
+    <br><br><br>
+    <div id="placeX" style="width:90%;height:200px;margin:0 auto;"></div><br>
+    <div id="placeY" style="width:90%;height:200px;margin:0 auto;"></div><br>
+    <div id="placeZ" style="width:90%;height:200px;margin:0 auto;"></div><br>
+    <div>
+        <dd id="x">X:</dd>
+        <dd id="y">Y:</dd>
+        <dd id="z">Z:</dd>
+    </dl>
+    <script>
+      var socket = io.connect("ws://vibtest.herokuapp.com");
+      socket.on('accX', function(msg){
+          $('#x').text("X:" + msg);
+          updatePlot(msg, dataX, plotX);
+      });
+      socket.on('accY', function(msg){
+          $('#y').text("Y:" + msg);
+          updatePlot(msg, dataY, plotY);
+      });
+      socket.on('accZ', function(msg){
+          $('#z').text("Z:" + msg);
+          updatePlot(msg, dataZ, plotZ);
+      });
+
+      socket.on('connect', function() {
+        socket.on('text',function(text){
+          console.log(text);
+        });
+      });
+    </script>
+    <script src="js/controlPlot.js"></script>
+  </body>
+</html>

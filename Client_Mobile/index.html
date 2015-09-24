@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="components/loader.css">
+        <link rel="stylesheet" href="css/style.css">
+        <title>StoreAcc</title>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="components/loader.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.flot.min.js"></script>
+    </head>
+    <body>
+        <br><br><br>
+        <div id="placeX" style="width:90%;height:200px;margin:0 auto;"></div><br>
+        <div id="placeY" style="width:90%;height:200px;margin:0 auto;"></div><br>
+        <div id="placeZ" style="width:90%;height:200px;margin:0 auto;"></div><br>
+        <div>
+            <dd id="x">X:</dd>
+            <dd id="y">Y:</dd>
+            <dd id="z">Z:</dd>
+        </dl>
+        <a id="button" class="button--large" onclick="getAcc();">Start</a>
+        <script>
+            var socket = io.connect("ws://vibtest.herokuapp.com");
+            
+            socket.on('connect', function() {
+                socket.on('text',function(text){
+                    console.log(text);
+                });
+            });
+            socket.on('accX', function(msg){
+                $('#x').text("X:" + msg);
+            });
+            socket.on('accY', function(msg){
+                $('#y').text("Y:" + msg);
+            });
+            socket.on('accZ', function(msg){
+                $('#z').text("Z:" + msg);
+            });
+        </script>
+        <script src="js/controlPlot.js"></script>
+        <script src="js/controlAccSensor.js"></script>
+    </body>
+</html>
